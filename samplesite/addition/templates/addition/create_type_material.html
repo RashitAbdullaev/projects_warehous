@@ -1,0 +1,80 @@
+{% load static %}
+<br>
+<div class="row">
+    <div class="col-lg-6 d-flex">
+        <div class="container">
+            <div class="dropdown dropdown1">
+                <div class="select">
+
+                    <span>Тип материала</span>
+                    <i class="fa fa-chevron-left"></i>
+                </div>
+
+                <ul class="dropdown-menu">
+                    {% for j in material_type %}
+                    <li value={{j.pk}} class="selectMatType">{{j.title_material_type}}</li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+            <span class="msg"></span>
+        </div>
+        <button type="submit" class="btn1 btn btn-outline-dark" onmousedown="viewCreate2()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+                 viewBox="0 0 16 16" style="color:white">
+                <path fill-rule="evenodd"
+                      d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+            </svg>
+        </button>
+    </div>
+
+
+    <div class="col-lg-4" id="create2">
+        <form method="post" class="d-flex form1" id="fm">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div>
+                <button class=" btn3 btn btn-outline-dark" id="btn_add">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-check-lg" viewBox="0 0 16 16">
+                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                    </svg>
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+<div class="Create"></div>
+{% block javascript %}
+<script type="text/javascript" src="{% static 'addition/dropdown1.js' %}"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+        $(document).ready(function ()   {
+                 $('#btn_add').click(function(){
+                     $.ajax({
+                        url:"MaterialType/"+document.getElementById('id_category').value,
+                        method:'post',
+                        data:$("#fm").serialize(),
+                     })
+                })
+            $('.selectMatType').click(function() {
+                document.getElementById('create1').style.display = 'none';
+                document.getElementById('create2').style.display = 'none';
+                $.ajax({
+                    url:"materials/"+this.value,
+                          success: function (response) {
+                            $('.Create').html(response)
+                         }
+                })
+            })
+
+        })
+
+</script>
+
+
+{% endblock javascript %}

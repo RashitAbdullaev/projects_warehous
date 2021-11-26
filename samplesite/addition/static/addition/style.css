@@ -1,0 +1,137 @@
+header{
+    background:#5C58B2 !important;
+    height:50px
+}
+#create1{
+    display:none;
+}
+#create2{
+    display:none;
+}
+#create3{
+    display:none;
+}
+.btn1{
+    height: fit-content;
+    padding: 8px;
+    border: 1px solid black !important;
+    background: #5c58b4 !important;
+}
+.form-select{
+    height:50px;
+}
+span{
+    opacity:1.0;
+    margin-left:5px;
+}
+
+#id_title{
+    height:25px;
+    padding-bottom:7px;
+    border: none !important;
+    border-bottom: 1px solid black !important;
+}
+
+.input-group:focus{
+    border: none !important;
+    border-bottom: 1px solid black !important;
+    outline:none;
+}
+.nav-tabs .nav-link:hover {
+    color:black  !important;
+}
+.nav-tabs .nav-link.active{
+    color:black !important;
+}
+.btn2{
+    margin-left:5px;
+    margin-top:15px;
+}
+#id_title_material_type{
+    height:25px;
+    padding-bottom:7px;
+    border: none !important;
+    border-bottom: 1px solid black !important;
+}
+p{
+
+    margin:0 0 0 20px !important;
+}
+#id_category{
+    height:25px;
+    border-radius:7px;
+}
+.btn3{
+
+    margin-top:15px;
+}
+#id_title_material{
+    height:25px;
+    padding-bottom:7px;
+    border: none !important;
+    border-bottom: 1px solid black !important;
+}
+#id_unit{
+    border: none !important;
+    border-bottom: 1px solid black !important;
+}
+.btn4{
+    margin-top:15px;
+}
+#id_material_type{
+    height:25px;
+    border-radius:7px;
+}
+#id_material{
+     height:25px;
+    border-radius:7px;
+}
+
+
+
+
+#id_quantity{
+    padding-bottom:7px;
+    border: none !important;
+    border-bottom: 1px solid black !important;
+}
+#id_general_price{
+    padding-bottom:7px;
+    border: none !important;
+    border-bottom: 1px solid black !important;
+}
+#id_currency{
+    border: none !important;
+    border-bottom: 1px solid black !important;
+}
+#id_date{
+    padding-bottom:7px;
+    border: none !important;
+    border-bottom: 1px solid black !important;
+}
+#id_warehouse{
+    border: none !important;
+    border-bottom: 1px solid black !important;
+}
+.coming {
+    margin-top: 25px !important;
+}
+.input-group{
+    height:20px;
+}
+.form1{
+    margin-top:-9px !important;
+}
+
+
+.outline1{
+    margin-top:10px !important;
+}
+.button-rent{
+    margin:0 0 0 20% !important;
+}
+
+legend{
+        font-size:20px !important;
+        margin:10px 0 0 0 !important;
+}

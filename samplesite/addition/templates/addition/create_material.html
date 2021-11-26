@@ -1,0 +1,81 @@
+{% load static %}
+<br>
+<div class="row">
+    <div class="col-lg-6 d-flex">
+        <div class="container">
+            <div class="dropdown dropdown2" tabindex="3">
+                <div class="select">
+
+                    <span>Материалы</span>
+                    <i class="fa fa-chevron-left"></i>
+                </div>
+
+                <ul class="dropdown-menu">
+                    {% for g in material %}
+                    <li value={{g.pk}} class="selectMat">{{g.title_material}}</li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+            <span class="msg"></span>
+        </div>
+
+        <button type="submit" class="btn1 btn btn-outline-dark" onmousedown="viewCreate3()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+                 viewBox="0 0 16 16" style="color:white">
+                <path fill-rule="evenodd"
+                      d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+            </svg>
+        </button>
+    </div>
+
+
+    <div class="col-lg-4" id="create3">
+        <form method="post" class="d-flex form1" id="fmMater">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div>
+                <button class="btn4 btn btn-outline-dark btn-md" type="submit" id="btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-check-lg" viewBox="0 0 16 16">
+                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                    </svg>
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+<div class="Coming"></div>
+{% block javascript %}
+<script type="text/javascript" src="{% static 'addition/dropdown2.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+        $(document).ready(function(){
+            $('#btn').click(function(){
+                $.ajax({
+                    method:'Post',
+                    data:$("#fmMater").serialize(),
+                    url:"materials/"+document.getElementById('id_material_type').value,
+                })
+            })
+            $('.selectMat').click(function(){
+                document.getElementById('create1').style.display = 'none';
+                document.getElementById('create2').style.display = 'none';
+                document.getElementById('create3').style.display = 'none';
+                $.ajax({
+                    url:"coming/"+this.value,
+                        success: function(response){
+                            $('.Coming').html(response)
+                    }
+                })
+            })
+        })
+
+
+
+</script>
+
+{% endblock javascript %}
+

@@ -1,0 +1,34 @@
+<br>
+<hr>
+
+                <form method="post" id="fmComing" >
+                        <div class="row justify-content-around">
+                                   {% csrf_token %}
+                                    {{ form.as_p }}
+                        </div>
+                    <div class=" container width:100%">
+                        <br>
+                       <button type="button" id="btnCom" class="btn btn-outline-dark "style="width:100%" data-mdb-ripple-color="dark">Добавить приход </button>
+                    </div>
+                </form>
+
+
+ {% block javascript %}
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function ()   {
+
+        var all_p = document.querySelectorAll('#fmComing > .row > p');
+        all_p.forEach(function(e){
+            e.setAttribute('class', 'col-5 coming');
+        })
+                 $('#btnCom').click(function(){
+                     $.ajax({
+                        url:"coming/"+document.getElementById('id_material').value,
+                        method:'Post',
+                        data:$("#fmComing").serialize(),
+                     })
+                })
+    })
+</script>
+ {% endblock javascript %}
