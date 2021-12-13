@@ -90,8 +90,8 @@ class Coming(models.Model):
 
 
 class Rent(models.Model):
-    date_of_issue = models.DateTimeField(verbose_name='Дата выдачи',auto_now_add=True)
-    date_of_delivery = models.DateTimeField(verbose_name='Дата сдачи',null=True,blank=True)
+    date_of_issue = models.DateTimeField(verbose_name='Дата выдачи', auto_now_add=True)
+    date_of_delivery = models.DateTimeField(verbose_name='Дата сдачи', null=True, blank=True)
     worker = models.CharField(max_length=25, verbose_name='Работник')
     tool = models.CharField(max_length=25, verbose_name='Инструмент')
     quantity = models.IntegerField(null=True, verbose_name='Количество')

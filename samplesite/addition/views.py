@@ -108,6 +108,7 @@ class Data_rents(TemplateView):
 #         return render(request, 'addition/info_rent.html', context)
 
 def info_rents(request, worker):
+    rent = Rent.objects.filter(worker=worker)
     RentFormSet = modelformset_factory(Rent, form=RentForm, fields=('quantity',),
                                        can_delete=True, extra=0)
     if request.method == 'POST':
@@ -117,5 +118,5 @@ def info_rents(request, worker):
             return redirect('rent')
     else:
         formset = RentFormSet(queryset=Rent.objects.filter(worker=worker))
-    context = {'formset': formset}
+    context = {'formset': formset, 'rent':rent}
     return render(request, 'addition/info_rent.html', context)

@@ -29,8 +29,8 @@
         </button>
     </div>
 
-    <div class="col-lg-4" id="create1">
-        <form  method="post" class="d-flex form1">
+    <div class="col-lg-4" id="create1" >
+        <form  method="post" class="d-flex form1" action="categories">
             <div>
                 {% csrf_token %}
                 {{ form.as_p }}

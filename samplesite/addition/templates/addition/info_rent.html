@@ -1,10 +1,9 @@
 {% load static %}
 
 
-
-    <form method="post">
+    <form method="post" action="{% url 'rent' %}">
         {% csrf_token %}
-        {{formset.as_p }}
+        {{ formset.as_p }}
         <button type="submit"> save</button>
     </form>
 
