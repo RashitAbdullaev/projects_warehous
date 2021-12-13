@@ -13,7 +13,7 @@ class Material_typeAdmin(admin.ModelAdmin):
 
 
 class MaterialAdmin(admin.ModelAdmin):
-    list_display = ('title_material', 'material_type')
+    list_display = ('title_material', 'material_type', 'ean')
 
 
 class ComingAdmin(admin.ModelAdmin):

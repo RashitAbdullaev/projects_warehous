@@ -1,0 +1,49 @@
+{% load static %}
+
+
+
+    <form method="post">
+        {% csrf_token %}
+        {{formset.as_p }}
+        <button type="submit"> save</button>
+    </form>
+
+
+
+<!--<form method="post" >-->
+<!--    {% csrf_token %}-->
+<!--    {{ formset.management_form }}-->
+<!--    <table class="table ">-->
+<!--        <thead>-->
+<!--            <tr>-->
+<!--                <th scope="col">Наименование</th>-->
+<!--                <th scope="col">Дата оренды</th>-->
+<!--                <th scope="col">Количество</th>-->
+<!--                <th scope="col">Принять</th>-->
+<!--            </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--            {% for form in formset %}-->
+<!--                <tr>-->
+
+<!--                    <td class="quantity">{{ form.quantity}}</td>-->
+<!--                    <td>Удалить {{form.DELETE}}</td>-->
+<!--                </tr>-->
+<!--            {% endfor %}-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--    <input type="submit" class="btn bnt-submit btn15" style="width: -webkit-fill-available;" value="Сохранить">-->
+<!--</form>-->
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.0/mdb.min.js"></script>
+
+
+
+
+
+
+
+
+

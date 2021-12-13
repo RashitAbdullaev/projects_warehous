@@ -45,8 +45,8 @@ class Material(models.Model):
     ]
     title_material = models.CharField(max_length=20, verbose_name='Материал')
     unit = models.CharField(max_length=20, choices=Unit_Type, default=Metr, verbose_name='Ед измерения')
-    barcode = models.ImageField(upload_to='images/', null=True, blank=True)
-    ean = models.IntegerField(verbose_name='Значения штрихкода', null=True, blank=True)
+    barcode = models.ImageField(upload_to='images/', null=True)
+    ean = models.IntegerField(verbose_name='Значения штрихкода', null=True, unique=True)
     material_type = models.ForeignKey(Material_type, null=True, on_delete=models.CASCADE, verbose_name='Тип материала')
 
     def __str__(self):
@@ -90,12 +90,13 @@ class Coming(models.Model):
 
 
 class Rent(models.Model):
-    date_of_issue = models.DateTimeField(verbose_name='Дата выдачи')
-    date_of_delivery = models.DateTimeField(verbose_name='Дата сдачи')
+    date_of_issue = models.DateTimeField(verbose_name='Дата выдачи',auto_now_add=True)
+    date_of_delivery = models.DateTimeField(verbose_name='Дата сдачи',null=True,blank=True)
     worker = models.CharField(max_length=25, verbose_name='Работник')
     tool = models.CharField(max_length=25, verbose_name='Инструмент')
-    # material = models.ForeignKey(Material,null=True,on_delete=models.CASCADE, verbose_name=)
+    quantity = models.IntegerField(null=True, verbose_name='Количество')
+    material = models.ForeignKey(Material, null=True, on_delete=models.CASCADE, verbose_name='материал')
+
     class Meta:
         verbose_name = 'Аренду'
         verbose_name_plural = "Аренды"
-

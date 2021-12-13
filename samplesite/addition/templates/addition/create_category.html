@@ -1,54 +1,55 @@
-{% extends "addition/layout/basic.html" %}
-{% block Create %}
-<div class="col-lg-6 d-flex">
-    <div class="container">
+{% load static %}
 
-        <div class="dropdown">
-            <div class="select">
-                <span>Категории</span>
-                <i class="fa fa-chevron-left"></i>
+<br>
+<div class="row">
+    <div class="col-lg-6 d-flex">
+        <div class="container">
+
+            <div class="dropdown">
+                <div class="select">
+                    <span>Категории</span>
+                    <i class="fa fa-chevron-left"></i>
+                </div>
+                <ul class="dropdown-menu custom-dropdown-menu">
+                    {% for i in category %}
+                    <li value={{i.pk}} class="select_category">{{i.title}}</li>
+                    {% endfor %}
+                </ul>
+
             </div>
 
-            <ul class="dropdown-menu custom-dropdown-menu">
-                {% for i in category %}
-                <li value={{i.pk}} class="select_category">{{i.title}}</li>
-                {% endfor %}
-            </ul>
-
+            <span class="msg"></span>
         </div>
-
-        <span class="msg"></span>
+        <button type="submit" class="btn1 btn btn-outline-dark" onmousedown="viewCreate1()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+                 viewBox="0 0 16 16" style="color:white">
+                <path fill-rule="evenodd"
+                      d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+            </svg>
+        </button>
     </div>
-    <button type="submit" class="btn1 btn btn-outline-dark" onmousedown="viewCreate1()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
-             viewBox="0 0 16 16" style="color:white">
-            <path fill-rule="evenodd"
-                  d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-        </svg>
-    </button>
-</div>
 
-<div class="col-lg-4" id="create1">
-    <form action="" method="post" class="d-flex form1">
-        <div>
-            {% csrf_token %}
-            {{ form.as_p }}
-        </div>
-        <div>
-            <button class="btn2 btn btn-outline-dark " type="submit">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                     class="bi bi-check-lg" viewBox="0 0 16 16">
-                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
-                </svg>
-            </button>
-        </div>
-    </form>
+    <div class="col-lg-4" id="create1">
+        <form  method="post" class="d-flex form1">
+            <div>
+                {% csrf_token %}
+                {{ form.as_p }}
+            </div>
+            <div>
+                <button class="btn2 btn btn-outline-dark " type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-check-lg" viewBox="0 0 16 16">
+                        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                    </svg>
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
-
 <div class="into"></div>
 {% block javascript %}
+<script type="text/javascript" src="{% static 'addition/dropdown.js' %}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 <script>
 $(document).ready(function ()   {
     $('.select_category').click(function() {
@@ -62,95 +63,10 @@ $(document).ready(function ()   {
     })
 })
 
+
+
 </script>
 {% endblock javascript %}
-{% endblock %}
 
 
-{% block Rent %}
 
-<div class="col-lg-6">
-    <div class="form-outline">
-        <input type="text" id="typeText" class="form-control"/>
-        <label class="form-label" for="typeText">Фамилия</label>
-    </div>
-</div>
-<div class="col-lg-6">
-    <div class="form-outline">
-        <input type="text" id="typeText1" class="form-control"/>
-        <label class="form-label" for="typeText">Инструмент</label>
-    </div>
-</div>
-<div class="row justify-content-between">
-    <div class="col-lg-6">
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Наименование</th>
-                <th scope="col">Дата оренды</th>
-                <th scope="col">Количество</th>
-                <th scope="col">Принять</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>
-                    <div class="form-outline col-lg-8">
-                        <input type="text" class="form-control form-control-sm"/>
-                        <label class="form-label" >Количество</label>
-                    </div>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-outline-warning btn-sm" data-mdb-ripple-color="dark">
-                        Принять
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="col-lg-6">
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Наименнование</th>
-                <th scope="col">Количество</th>
-                <th scope="col">В наличии</th>
-                <th scope="col">В наличии</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-<!--                <td>Mark</td>-->
-<!--                <td>-->
-<!--                    <div class="form-outline col-lg-6">-->
-<!--                        <input type="text" class="form-control form-control-sm"/>-->
-<!--                        <label class="form-label" >Количество</label>-->
-<!--                    </div>-->
-<!--                </td>-->
-<!--                <td>@mdo</td>-->
-                {% for r in rent %}
-                <td>
-                    {{r.worker}}
-                </td>
-                {% endfor %}
-
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="row justify-content-end ">
-    <div class="col-lg-2">
-        <button type="button" class="btn btn-outline-primary button-rent" data-mdb-ripple-color="dark">
-            Выдать
-        </button>
-    </div>
-</div>
-
-
-{% endblock %}

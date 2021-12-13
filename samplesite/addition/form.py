@@ -45,5 +45,6 @@ class ComingForm(ModelForm):
 
 
 class RentForm(ModelForm):
-    model = Rent
-    fields = ('worker', 'tool', 'date_of_issue', 'date_of_delivery',)
+    class Meta:
+        model = Rent
+        fields = ('quantity',)
