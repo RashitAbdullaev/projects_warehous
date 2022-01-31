@@ -1,6 +1,6 @@
-from barcode.writer import ImageWriter
 from django.db import models
-import barcode
+from django.utils import timezone
+from django.utils import formats
 
 
 class Сategories(models.Model):
@@ -16,7 +16,7 @@ class Сategories(models.Model):
 
 class Material_type(models.Model):
     title_material_type = models.CharField(max_length=20, verbose_name='Тип материала')
-    category = models.ForeignKey(Сategories, null=True, on_delete=models.CASCADE, verbose_name='Категория')
+    category = models.ForeignKey(Сategories, null=True, on_delete=models.CASCADE, verbose_name='Категории')
 
     class Meta:
         verbose_name = 'Тип материала'
@@ -45,7 +45,7 @@ class Material(models.Model):
     ]
     title_material = models.CharField(max_length=20, verbose_name='Материал')
     unit = models.CharField(max_length=20, choices=Unit_Type, default=Metr, verbose_name='Ед измерения')
-    barcode = models.ImageField(upload_to='images/', null=True)
+    barcode = models.ImageField(upload_to='images/', null=True,verbose_name='Штрихкод')
     ean = models.IntegerField(verbose_name='Значения штрихкода', null=True, unique=True)
     material_type = models.ForeignKey(Material_type, null=True, on_delete=models.CASCADE, verbose_name='Тип материала')
 
@@ -90,13 +90,13 @@ class Coming(models.Model):
 
 
 class Rent(models.Model):
-    date_of_issue = models.DateTimeField(verbose_name='Дата выдачи', auto_now_add=True)
+    date_of_issue = models.DateTimeField(verbose_name='Дата выдачи', default=timezone.now)
     date_of_delivery = models.DateTimeField(verbose_name='Дата сдачи', null=True, blank=True)
-    worker = models.CharField(max_length=25, verbose_name='Работник')
-    tool = models.CharField(max_length=25, verbose_name='Инструмент')
-    quantity = models.IntegerField(null=True, verbose_name='Количество')
-    material = models.ForeignKey(Material, null=True, on_delete=models.CASCADE, verbose_name='материал')
+    worker = models.CharField(max_length=25, verbose_name='Работник', null=False, blank=True)
+    quantity = models.IntegerField(null=True, verbose_name='Количество', blank=True)
+    in_stock = models.IntegerField(null=True, blank=True, verbose_name='в наличии')
+    material = models.ForeignKey(Material, null=True, on_delete=models.CASCADE, verbose_name='материал',blank=False)
 
     class Meta:
-        verbose_name = 'Аренду'
+        verbose_name = 'Аренда'
         verbose_name_plural = "Аренды"

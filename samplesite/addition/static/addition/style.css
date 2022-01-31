@@ -11,25 +11,49 @@ header{
 #create3{
     display:none;
 }
+
+.form_category{
+    margin-top:-2%
+}
+.input_category{
+    height:32px!important;
+}
+.type_material_category{
+    margin-top:-1%
+}
+.type_material{
+    margin-top:-2%
+}
+.input-type_material{
+    height:32px!important;
+}
+
+.form_title_material{
+    margin-top:-2%
+}
+.form_unit{
+    margin-top:-2%;
+}
+.form_material_type{
+    margin-top:-1%;
+}
+.input-title_material{
+    height:32px!important;
+}
+.input-unit{
+    height:32px!important;
+    padding-top:2px!important;
+
+}
 .btn1{
     height: fit-content;
     padding: 8px;
     border: 1px solid black !important;
     background: #5c58b4 !important;
 }
-.form-select{
-    height:50px;
-}
 span{
     opacity:1.0;
     margin-left:5px;
-}
-
-#id_title{
-    height:25px;
-    padding-bottom:7px;
-    border: none !important;
-    border-bottom: 1px solid black !important;
 }
 
 .input-group:focus{
@@ -43,16 +67,7 @@ span{
 .nav-tabs .nav-link.active{
     color:black !important;
 }
-.btn2{
-    margin-left:5px;
-    margin-top:15px;
-}
-#id_title_material_type{
-    height:25px;
-    padding-bottom:7px;
-    border: none !important;
-    border-bottom: 1px solid black !important;
-}
+
 p{
 
     margin:0 0 0 20px !important;
@@ -61,23 +76,7 @@ p{
     height:25px;
     border-radius:7px;
 }
-.btn3{
 
-    margin-top:15px;
-}
-#id_title_material{
-    height:25px;
-    padding-bottom:7px;
-    border: none !important;
-    border-bottom: 1px solid black !important;
-}
-#id_unit{
-    border: none !important;
-    border-bottom: 1px solid black !important;
-}
-.btn4{
-    margin-top:15px;
-}
 #id_material_type{
     height:25px;
     border-radius:7px;
@@ -86,10 +85,6 @@ p{
      height:25px;
     border-radius:7px;
 }
-
-
-
-
 #id_quantity{
     padding-bottom:7px;
     border: none !important;
@@ -116,29 +111,13 @@ p{
 .coming {
     margin-top: 25px !important;
 }
-.input-group{
-    height:20px;
-}
-.form1{
-    margin-top:-9px !important;
-}
-
-
 .outline1{
     margin-top:10px !important;
 }
 .button-rent{
     margin:0 0 0 20% !important;
 }
-
 legend{
         font-size:20px !important;
         margin:10px 0 0 0 !important;
-}
-.info-rent{
-    overflow: scroll;
-    width: auto;
-    height: 300px;
-    padding: 5px;
-    border: solid 1px black;
 }

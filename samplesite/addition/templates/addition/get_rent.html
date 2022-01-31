@@ -1,8 +1,38 @@
-<tr>
-    <td>{{material.title_material}}</td>
-    <td>
+{% load crispy_forms_tags %}
+<form method="post" id="form-rent" action="">
+    {% csrf_token %}
+     {%for i in formset%}
+        <div class="row">
+            <div class="col-lg-4">
+                {{i.material|as_crispy_field}}
+            </div>
+            <div class="col-lg-4">
+                {{i.quantity|as_crispy_field}}
+            </div>
+            <div class="col-lg-4">
+                {{i.in_stock|as_crispy_field}}
+            </div>
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn bnt-submit" id="btn-rent" style="width: -webkit-fill-available;"> Сохранить</button>
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function ()   {
 
-    </td>
-    <td>{{in_stock}}</td>
-</tr>
+                  var worker = $('.input-worker').val()
+
+                     $('#btn-rent').click(function(){
+                         $('.rent_material').prop('disabled',false)
+                         $.ajax({
+                            url:"data_rent/"+document.getElementById('data_rent').value+'/'+worker,
+                            method:'Post',
+                            data:$("#form-rent").serialize(),
+                         });
+
+                    })
+     })
+</script>
+
+
 

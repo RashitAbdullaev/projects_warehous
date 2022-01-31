@@ -4,16 +4,16 @@ from .models import *
 
 
 class СategoriesAdmin(admin.ModelAdmin):
-    list_display = ('title', 'title')
+    list_display = ('title',)
 
 
 class Material_typeAdmin(admin.ModelAdmin):
     list_display = ('title_material_type', 'category')
-    search_fields = ('title_material_type', 'title_material_type')
+    search_fields = ('title_material_type', 'category')
 
 
 class MaterialAdmin(admin.ModelAdmin):
-    list_display = ('title_material', 'material_type', 'ean')
+    list_display = ('pk','title_material', 'material_type', 'ean','unit','material_type','barcode')
 
 
 class ComingAdmin(admin.ModelAdmin):
@@ -21,7 +21,8 @@ class ComingAdmin(admin.ModelAdmin):
 
 
 class RentAdmin(admin.ModelAdmin):
-    list_display = ('date_of_issue', 'date_of_delivery', 'worker', 'tool')
+    list_display = ('date_of_delivery', 'worker', 'material', 'quantity','date_of_issue')
+    readonly_fields = ['date_of_issue','date_of_delivery']
 
 
 admin.site.register(Сategories, СategoriesAdmin)

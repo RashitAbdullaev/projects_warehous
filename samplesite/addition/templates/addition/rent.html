@@ -1,23 +1,35 @@
 {% extends "addition/layout/basic.html" %}
 {% block Rent %}
-
+{% load static %}
 <div class="col-lg-6">
     <div class="form-outline">
-        <input type="text" id="typeText" class="form-control input-worker"/>
-        <label class="form-label" for="typeText">Фамилия</label>
+        <input type="text" id="info_rent" class="form-control input-worker" name="worker"/>
+        <label class="form-label" >Фамилия</label>
     </div>
 </div>
 <div class="col-lg-6">
 
     <div class="form-outline">
-        <input type="text" id="typeText1" class="form-control input-ean"/>
-        <label class="form-label" for="typeText">Инструмент</label>
+        <input type="text" id="data_rent" maxlength="12" class="form-control input-ean data_rent"/>
+        <label class="form-label" >Инструмент</label>
     </div>
 
 </div>
 <div class="row justify-content-between">
-    <div class="col-lg-6 data_worker">
+    <div class="col-lg-6 ">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Наименование</th>
+                <th scope="col">Дата аренды</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Принять</th>
+            </tr>
+            </thead>
+        </table>
+        <div class="data_worker">
 
+        </div>
     </div>
 
     <div class="col-lg-6">
@@ -29,43 +41,34 @@
                 <th scope="col">В наличии</th>
             </tr>
             </thead>
-            <tbody class="data_ean">
+              </table>
+            <div class="data_ean">
 
-            </tbody>
-        </table>
+            </div>
+
     </div>
 </div>
-
-
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
 $(document).ready(function ()   {
-        $('.input-ean').on('paste',function(e) {
-            var ean = (e.originalEvent || e).clipboardData.getData('text/plain');
-
-            $.ajax({
-                url:"rent/"+ean,
-                success: function(response){
-                    $('.data_ean').append(response);
-                }
-            })
-        })
-
          $('.input-worker').on('paste',function(e) {
-            var worker = (e.originalEvent || e).clipboardData.getData('text/plain');
+            var worker = (e.originalEvent || e).clipboardData.getData('text');
+            (e.originalEvent || e).clipboardData.setData('text/plain', '');
+            var url="info_rent/"+worker
 
             $.ajax({
-                url:"info_rent/"+worker,
+                url:url,
                 success: function(response){
                     $('.data_worker').html(response);
+                    $('.data_ean').html('')
+                    $('.data_rent').val('')
                 }
             })
         })
 
 })
-
 </script>
 {% endblock %}

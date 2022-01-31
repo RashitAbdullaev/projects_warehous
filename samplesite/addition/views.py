@@ -1,12 +1,11 @@
 from django.db.models import Sum, Q
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from .form import *
 from .models import Сategories, Material_type, Material, Coming, Rent
 from django.urls import reverse_lazy, reverse
 from .pylib.barcode import generate_barcode
 from django.views.generic import ListView, CreateView, TemplateView, FormView
-from django.forms import modelformset_factory
+from django.forms import modelformset_factory, Textarea, TextInput, Select, RadioSelect
 
 
 class Category(CreateView):
@@ -65,58 +64,65 @@ class Rents(CreateView):
     template_name = 'addition/rent.html'
     form_class = RentForm
     success_url = reverse_lazy('rent')
+    ean_list = []
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
 
 
-class Data_rents(TemplateView):
-    template_name = 'addition/get_rent.html'
-    context_object_name = 'material'
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context['material'] = Material.objects.get(ean=self.kwargs['ean'])
-        # context['last_coming'] = Coming.objects.filter(material=context['material'].pk).last()
-        sum_coming = Coming.objects.aggregate(quantity=Sum('quantity', filter=Q(material=context['material'].pk)))
-        sum_rent = Rent.objects.aggregate(quantity=Sum('quantity', filter=Q(material=context['material'].pk)))
-        context['in_stock'] = sum_coming['quantity'] - sum_rent['quantity']
-        return context
-
-
-# class Info_rents(TemplateView):
-#     template_name = 'addition/info_rent.html'
-#
-#     def get_context_data(self, *args, **kwargs):
-#         context = super().get_context_data(*args, **kwargs)
-#         RentFormSet = modelformset_factory(Rent, fields=('worker', 'tool', 'quantity', 'date_of_issue'),
-#                                            can_delete=True, extra=0, labels={'worker': '', 'tool': '', 'quantity': '',
-#                                                                              'date_of_issue': ''})
-#         context['formset'] = RentFormSet(queryset=Rent.objects.filter(worker=self.kwargs['worker']))
-#         return context
-#
-#     def post(self, request):
-#         if request.method == 'POST':
-#             formset = self.get_context_data().RentFormSet(request.POST)
-#             if formset.is_valid():
-#                 formset.save()
-#                 return redirect('rent')
-#         else:
-#             formset = self.get_context_data().RentFormSet()
-#         context = {'formset': formset}
-#         return render(request, 'addition/info_rent.html', context)
-
-def info_rents(request, worker):
+def info_rents(request, worker, ):
     rent = Rent.objects.filter(worker=worker)
-    RentFormSet = modelformset_factory(Rent, form=RentForm, fields=('quantity',),
-                                       can_delete=True, extra=0)
+    Rents.ean_list.clear()
+    RentFormSet = modelformset_factory(Rent, fields=('material', 'date_of_issue', 'quantity',),
+
+                                       can_delete=True, extra=0,
+                                       labels={'quantity': '', 'material': '', 'date_of_issue': ''},
+                                       widgets={'material': Select(attrs=({'class': 'material ', 'disabled': True,
+                                                                           'value': 'selected'})),
+                                                'date_of_issue': TextInput(attrs=({'class': 'date'})),
+                                                'quantity': TextInput(attrs=({'class': 'quantity'}))})
     if request.method == 'POST':
-        formset = RentFormSet(request.POST )
+        formset = RentFormSet(request.POST)
         if formset.is_valid():
             formset.save()
             return redirect('rent')
     else:
-        formset = RentFormSet(queryset=Rent.objects.filter(worker=worker))
-    context = {'formset': formset, 'rent':rent}
+        formset = RentFormSet(queryset=rent)
+    context = {'formset': formset, 'rent': rent}
     return render(request, 'addition/info_rent.html', context)
+
+
+def data_rents(request, ean, worker, ):
+    material_ean = Material.objects.get(ean=ean)
+    Rents.ean_list.append(material_ean)
+    RentFormSet = modelformset_factory(Rent, fields=('material', 'quantity', 'in_stock'), can_delete=False,
+                                       extra=len(Rents.ean_list),
+                                       labels={'quantity': '', 'material': '', 'in_stock': ''},
+                                       widgets={'quantity': TextInput(attrs=({'class': 'rent_quantity'})),
+                                                'material': Select(
+                                                    attrs=({'class': 'rent_material', 'disabled': True})),
+                                                'in_stock': TextInput(attrs=({'class': 'in_stock', 'disabled': True}))})
+    formset = RentFormSet(request.POST)
+    if request.method == 'POST':
+        if formset.is_valid():
+            for form in formset:
+                form.instance.worker = worker
+                form.save()
+            return redirect('rent')
+    else:
+
+        try:
+            formset = RentFormSet(initial=[{'material': x, 'in_stock':
+                Coming.objects.aggregate(sum=Sum('quantity', filter=Q(material=x.pk)))['sum'] -
+                Rent.objects.aggregate(sum=Sum('quantity', filter=Q(material=x.pk)))['sum']}
+                                           for x in Rents.ean_list],
+                                  queryset=Rent.objects.filter(quantity=0))
+        except TypeError:
+            formset = RentFormSet(initial=[{'material': x, 'in_stock':
+                Coming.objects.aggregate(sum=Sum('quantity', filter=Q(material=x.pk)))['sum'] - 0}
+                                           for x in Rents.ean_list],
+                                  queryset=Rent.objects.filter(quantity=0))
+
+    context = {'material_ean': material_ean, 'formset': formset, 'worker': worker, 'ean': Rents.ean_list}
+    return render(request, 'addition/get_rent.html', context)

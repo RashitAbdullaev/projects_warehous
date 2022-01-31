@@ -1,42 +1,59 @@
 {% load static %}
-
-
-    <form method="post" action="{% url 'rent' %}">
+{% load crispy_forms_tags %}
+<div>
+    <form method="post" action="{% url 'Info_rent' rent %} " id="info_rent_form">
         {% csrf_token %}
-        {{ formset.as_p }}
-        <button type="submit"> save</button>
+        {%for i in formset%}
+        <div class="row">
+            <div class="col-lg-3 mb-1">
+                {{i.material|as_crispy_field}}
+            </div>
+            <div class="col-lg-3">
+                {{i.date_of_issue|as_crispy_field}}
+            </div>
+            <div class="col-lg-3">
+                {{i.quantity|as_crispy_field}}
+            </div>
+            <div class="col-lg-3">
+                {{i.DELETE|as_crispy_field}}
+            </div>
+
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn bnt-submit " id="btn_info_rent" style="width: -webkit-fill-available;">
+            Сохранить
+        </button>
     </form>
 
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+$(document).ready(function ()   {
+
+    data_rent.onpaste = function(event) {
+        var ean = event.clipboardData.getData('text/plain');
+        var worker = $('.input-worker').val()
+        alert(ean)
+        $.ajax({
+            url:"data_rent/"+ean+"/"+worker,
+            success: function(response){
+            $('.data_ean').html(response);
+
+                }
+        })
+     };
+    $('#btn_info_rent').click(function(){
+        $('.material').prop('disabled',false)
+        })
+    $('#data-rent')
+})
+
+</script>
 
 
-<!--<form method="post" >-->
-<!--    {% csrf_token %}-->
-<!--    {{ formset.management_form }}-->
-<!--    <table class="table ">-->
-<!--        <thead>-->
-<!--            <tr>-->
-<!--                <th scope="col">Наименование</th>-->
-<!--                <th scope="col">Дата оренды</th>-->
-<!--                <th scope="col">Количество</th>-->
-<!--                <th scope="col">Принять</th>-->
-<!--            </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--            {% for form in formset %}-->
-<!--                <tr>-->
 
-<!--                    <td class="quantity">{{ form.quantity}}</td>-->
-<!--                    <td>Удалить {{form.DELETE}}</td>-->
-<!--                </tr>-->
-<!--            {% endfor %}-->
-<!--        </tbody>-->
-<!--    </table>-->
-<!--    <input type="submit" class="btn bnt-submit btn15" style="width: -webkit-fill-available;" value="Сохранить">-->
-<!--</form>-->
-
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.0/mdb.min.js"></script>
 
 
 

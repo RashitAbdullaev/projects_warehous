@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 <br>
 <div class="row">
     <div class="col-lg-6 d-flex">
@@ -30,12 +31,18 @@
     </div>
 
 
-    <div class="col-lg-4" id="create2">
+    <div class="col-lg-6" id="create2">
         <form method="post" class="d-flex form1" id="fm">
             {% csrf_token %}
-            {{ form.as_p }}
-
-            <div>
+            <div class=" type_material col-lg-4">
+                <small>тип материала</small>
+                {{form.title_material_type|as_crispy_field}}
+            </div >
+            <div class="type_material_category col-lg-4">
+                <small>категории</small>
+                {{form.category|as_crispy_field}}
+            </div>
+            <div class="col-lg-1">
                 <button class=" btn3 btn btn-outline-dark" id="btn_add">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-check-lg" viewBox="0 0 16 16">
@@ -73,6 +80,7 @@
             })
 
         })
+
 
 
 </script>
